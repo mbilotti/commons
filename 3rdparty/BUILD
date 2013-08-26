@@ -209,6 +209,9 @@ jar_library(name = 'dnsjava',
               jar(org = 'dnsjava', name = 'dnsjava', rev = '2.1.1').with_sources(),
             ])
 
+jar_library(name = 'fastutil',
+            dependencies = [ jar(org = 'it.unimi.dsi', name = 'fastutil', rev = '6.5.7').with_sources(), ])
+
 # common rev for all com.twitter%finagle* artifacts
 FINAGLE_REV = '5.3.23'
 
@@ -314,11 +317,32 @@ jar_library(name = 'guice-throwingproviders',
             ]
            )
 
+jar_library(name = 'hbc-core',
+            dependencies = [ jar(org = 'com.twitter', name = 'hbc-core', rev = '1.4.0') ])
+
+jar_library(name = 'hbc-twitter4j',
+            dependencies = [ jar(org = 'com.twitter', name = 'hbc-twitter4j', rev = '1.4.0') ])
+
 jar_library(name = 'hsqldb',
             dependencies = [ jar(org = 'hsqldb', name = 'hsqldb', rev = '1.8.0.10') ])
 
 jar_library(name = 'hsqldb-2.2',
             dependencies = [ jar(org = 'org.hsqldb', name = 'hsqldb', rev = '2.2.4') ])
+
+jar_library(name = 'jackson-jaxrs-json-provider',
+            dependencies = [ jar(org = 'com.fasterxml.jackson.jaxrs', name = 'jackson-jaxrs-json-provider', rev = '2.2.1').with_sources() ])
+
+jar_library(name = 'jersey-core',
+            dependencies = [ jar(org = 'com.sun.jersey', name = 'jersey-core', rev = '1.17.1').with_sources() ])
+
+jar_library(name = 'jersey-server',
+            dependencies = [ jar(org = 'com.sun.jersey', name = 'jersey-server', rev = '1.17.1').with_sources() ])
+
+jar_library(name = 'jersey-servlet',
+            dependencies = [ jar(org = 'com.sun.jersey', name = 'jersey-servlet', rev = '1.17.1').with_sources() ])
+
+jar_library(name = 'jersey-guice',
+            dependencies = [ jar(org = 'com.sun.jersey.contribs', name = 'jersey-guice', rev = '1.17.1').with_sources() ])
 
 jar_library(name = 'jetty',
             dependencies = [

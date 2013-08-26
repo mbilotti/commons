@@ -1,0 +1,32 @@
+java_library(name = 'hashtag_aggregator',
+  dependencies = [
+    pants('3rdparty:fastutil'),
+    pants('3rdparty:guava'),
+    pants('3rdparty:guice'),
+    pants('3rdparty:hbc-core'),
+    pants('3rdparty:hbc-twitter4j'),
+    pants('3rdparty:jackson-jaxrs-json-provider'),
+    pants('3rdparty:jersey-core'),
+    pants('3rdparty:jersey-server'),
+    pants('3rdparty:jersey-servlet'),
+    pants('3rdparty:jersey-guice'),
+    pants('src/java/com/twitter/common/application'),
+    pants('src/java/com/twitter/common/application/modules:http'),
+    pants('src/java/com/twitter/common/application/modules:log'),
+    pants('src/java/com/twitter/common/application/modules:stats'),
+    pants('src/java/com/twitter/common/args'),
+    pants('src/java/com/twitter/common/base'),
+    pants('src/java/com/twitter/common/text'),
+  ],
+  sources = rglobs('*.java'),
+)
+
+jvm_binary(name = 'bin',
+  basename = 'hashtag_aggregator',
+  main = 'com.twitter.hashtag_aggregator.Main',
+  dependencies = [
+    pants(':hashtag_aggregator'),
+    pants('3rdparty:slf4j-jdk14'),
+  ],
+)
+

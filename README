@@ -1,55 +1,24 @@
-Twitter common libraries for python and the jvm
+Hashtag aggregator demo
 
-== Installation ==
+== Usage  ==
 
-Building requires:
-+ jdk 1.6+
-+ python 2.6+
+To bundle the app, drop your config file in hashtag_aggregator/conf, then:
+$ ./pants goal clean-all bundle -- hashtag_aggregator --bundle-archive=zip
 
-The build tool is custom and hosted in the repository itself.
+To open the project in IntelliJ:
+$ ./pants goal clean-all idea -- tests/java/com/twitter/hashtag_aggregator:: --idea-project-name=hashtag_aggregator
 
-== Usage ==
+To run the unit tests:
+$ ./pants goal clean-all test tests/java/com/twitter/hashtag_aggregator::
 
-To build all jvm code and run all tests:
-$ ./pants goal test tests/{java,scala}/com/twitter/common::
+To run:
 
-Likewise for python commons:
-$ ./pants tests/python/twitter/common/:all
+$ cd dist/hashtag_aggregator-bundle
+$ java -jar hashtag_aggregator.jar -http_port=8080 -config_file=conf/<your file>
 
-And for the pants build tool itself:
-$ ./pants tests/python/twitter/pants:all
+To test the rest API, point your browser at:
 
-To get help on pants:
-$ ./pants help
+$ http://localhost:8080/api/model.json
 
-Read more http://twitter.github.com/commons/
-
-TODO(John Sirois): migrate pants documentation to the public wiki
-
-== Usage questions and feature discussions ==
-
-Please check the archives for twitter-commons@googlegroups.com then fire
-away if the question has not been addressed.
-
-== Reporting bugs ==
-
-Please use the github issue tracker for twitter commons at:
-https://github.com/twitter/commons/issues
-
-== Copyright and License ==
-
-Copyright 2011 Twitter, Inc.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this work except in compliance with the License.
-   You may obtain a copy of the License in the LICENSE file, or at:
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-
+You may notice that there's a ton of noise, near-duplicates, etc.
+That's the part you need to figure out!
