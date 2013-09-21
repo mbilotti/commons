@@ -11,14 +11,53 @@ $ ./pants goal clean-all idea -- tests/java/com/twitter/hashtag_aggregator:: --i
 To run the unit tests:
 $ ./pants goal clean-all test tests/java/com/twitter/hashtag_aggregator::
 
-To run:
+To run using the streaming API:
 
 $ cd dist/hashtag_aggregator-bundle
 $ java -jar hashtag_aggregator.jar -http_port=8080 -config_file=conf/<your file>
 
+To run using a local snapshot file:
+
+$ cd dist/hashtag_aggregator-bundle
+$ java -jar hashtag_aggregator.jar -http_port=8080 -replay_snapshot_file=<snapshot file>
+
 To test the rest API, point your browser at:
 
-$ http://localhost:8080/api/model.json
+  http://localhost:8080/api/model.json
 
 You may notice that there's a ton of noise, near-duplicates, etc.
 That's the part you need to figure out!
+
+Additonal useful command-line switches:
+
+  -tweet_log_interval=N : logs every Nth tweet consumed to the screen
+  -snapshot_replay_tps=N : control speed of snapshot replay, in tweets per second
+
+== Process Stats ==
+
+To view the process' stats, go to http://localhost:8080/vars
+Some interesting stats include:
+
+  msg_queue_depth : number of tweets consumed from the stream (or snapshot) waiting to be processed
+  tweets_consumed : total count of tweets consumed
+
+== Static assets ==
+
+The in-process HTTP server can serve static assets for you, for example: http://localhost:8080/public/static.txt
+Files should be placed under src/resources/com/twitter/hashtag_aggregator/api (alongside static.txt)
+See src/java/com/twitter/hashtag_aggregator/api/ApiModule.java for how to bind the resources to paths.
+
+By default, the in-process HTTP server will also serve Bootstrap and JQuery for you, for example: http://localhost:8080/js/jquery.min.js
+See src/java/com/twitter/common/webassets/bootstrap/BootstrapModule.java and
+src/java/com/twitter/common/webassets/jquery/JQueryModule.java for more the complete list of paths.
+See http://getbootstrap.com/2.3.2/ and http://api.jquery.com/ for useful documentation on these libraries.
+
+== Config file format ==
+
+A Java Properties file having the following keys:
+
+consumerKey=
+consumerSecret=
+token=
+secret=
+

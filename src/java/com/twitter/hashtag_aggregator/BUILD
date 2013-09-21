@@ -17,8 +17,11 @@ java_library(name = 'hashtag_aggregator',
     pants('src/java/com/twitter/common/args'),
     pants('src/java/com/twitter/common/base'),
     pants('src/java/com/twitter/common/text'),
+    pants('src/java/com/twitter/common/webassets/bootstrap'),
+    pants('src/java/com/twitter/common/webassets/jquery'),
   ],
   sources = rglobs('*.java'),
+  resources = rglobs('*'),
 )
 
 jvm_binary(name = 'bin',

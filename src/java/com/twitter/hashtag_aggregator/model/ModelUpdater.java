@@ -23,19 +23,19 @@ import twitter4j.StatusListener;
  */
 class ModelUpdater implements StatusListener {
   private static final Logger LOG = Logger.getLogger(ModelUpdater.class.getName());
-  private static final AtomicInteger STATUSES_COUNT = new AtomicInteger();
+  private static final AtomicInteger TWEET_COUNT = new AtomicInteger();
 
-  @CmdLine(name = "status_log_interval", help = "Log every Nth status; or 0 to disable")
+  @CmdLine(name = "tweet_log_interval", help = "Log every Nth tweet; or 0 to disable")
   @NotNegative
-  private static final Arg<Integer> STATUS_LOG_INTERVAL = Arg.create(0);
+  private static final Arg<Integer> TWEET_LOG_INTERVAL = Arg.create(0);
 
   private final Model model;
   private final Extractor extractor;
 
   static {
-    Stats.export(new SampledStat<Integer>("statuses_consumed", 0) {
+    Stats.export(new SampledStat<Integer>("tweets_consumed", 0) {
       @Override public Integer doSample() {
-        return STATUSES_COUNT.get();
+        return TWEET_COUNT.get();
       }
     });
   }
@@ -48,16 +48,16 @@ class ModelUpdater implements StatusListener {
 
   @Override
   public void onStatus(Status status) {
-    int interval = STATUS_LOG_INTERVAL.get();
+    int interval = TWEET_LOG_INTERVAL.get();
     if (interval > 0) {
-      int count = STATUSES_COUNT.get();
+      int count = TWEET_COUNT.get();
       if (count % interval == 0) {
-        LOG.info("Status [" + count + "] @" + status.getUser().getScreenName() + ": "
+        LOG.info("Tweet [" + count + "] @" + status.getUser().getScreenName() + ": "
             + status.getText());
       }
     }
 
-    STATUSES_COUNT.incrementAndGet();
+    TWEET_COUNT.incrementAndGet();
 
     Map<String, Integer> hashtagCounts = Maps.newHashMap();
     for (String hashtag : extractor.extractHashtags(status.getText())) {
