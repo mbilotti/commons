@@ -5,6 +5,8 @@ Hashtag aggregator demo
 To bundle the app, drop your config file in hashtag_aggregator/conf, then:
 $ ./pants goal clean-all bundle -- hashtag_aggregator --bundle-archive=zip
 
+Please note that the first time you bundle or create the IntelliJ project, it may take a long time to download all the dependencies.
+
 To open the project in IntelliJ:
 $ ./pants goal clean-all idea -- tests/java/com/twitter/hashtag_aggregator:: --idea-project-name=hashtag_aggregator
 
